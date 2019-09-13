@@ -1,0 +1,13 @@
+{
+  "name": "lms-sis-monitor",
+  "version": "1.0.0",
+  "description": "Monitor for SIS Import Errors in Canvas",
+  "main": "app.js",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "KTH Royal Institute of Technology",
+  "license": "MIT"
+}
