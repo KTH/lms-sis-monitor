@@ -2,7 +2,7 @@ require('dotenv').config()
 const subDays = require('date-fns/subDays')
 const { fetchImportErrors } = require('./lib/canvas')
 const parseError = require('./lib/parseError')
-const whitelistError = require('./lib/whitelistError')
+const errorGroup = require('./lib/errorGroup')
 
 const skog = require('skog/bunyan')
 skog.createLogger({
@@ -16,19 +16,18 @@ async function start () {
   const yesterday = subDays(new Date(), 1)
 
   skog.info(`Fetching errors from ${yesterday}`)
-  const errors = []
+  const group = errorGroup()
 
   const rawErrors = fetchImportErrors(yesterday)
   for await (const rawError of rawErrors) {
     const parsed = parseError(rawError)
-    const whitelist = whitelistError(parsed)
 
-    if (!whitelist) {
-      errors.push({ raw: rawError, parsed })
-    }
+    group.add({ raw: rawError, parsed })
   }
 
-  console.log(errors.length)
+  for (const [key, value] of group.list()) {
+    console.log(key, value.length)
+  }
 }
 
 start()
