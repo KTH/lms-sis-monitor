@@ -1,1 +1,2 @@
-console.log('Hello World')
+const server = require('./server')
+server.listen(3000)
