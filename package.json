@@ -12,6 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "@kth/canvas-api": "^2.1.0",
+    "date-fns": "^2.2.1",
+    "dotenv": "^8.1.0",
     "skog": "0.0.0"
   },
   "devDependencies": {
