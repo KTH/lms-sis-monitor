@@ -9,5 +9,9 @@
   },
   "keywords": [],
   "author": "KTH Royal Institute of Technology",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@kth/canvas-api": "^2.1.0",
+    "skog": "0.0.0"
+  }
 }
