@@ -13,8 +13,10 @@ async function start () {
   const yesterday = subDays(new Date(), 1)
 
   skog.info(`Fetching errors from ${yesterday}`)
-  const errors = await fetchImportErrors(yesterday)
-  skog.info(`Found ${errors.length} errrors`)
+  const errors = fetchImportErrors(yesterday)
+  for await (const error of errors) {
+    console.log(error)
+  }
 }
 
 start()
