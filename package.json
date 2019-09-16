@@ -13,5 +13,8 @@
   "dependencies": {
     "@kth/canvas-api": "^2.1.0",
     "skog": "0.0.0"
+  },
+  "devDependencies": {
+    "standard": "^14.2.0"
   }
 }
