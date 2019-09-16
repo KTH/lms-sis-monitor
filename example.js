@@ -1,6 +1,6 @@
 require('dotenv').config()
 const subDays = require('date-fns/subDays')
-const fetchImportErrors = require('./lib/fetchImportErrors')
+const { fetchImportErrors } = require('./lib/canvas')
 const skog = require('skog/bunyan')
 skog.createLogger({
   name: 'lms-sis-monitor',
@@ -14,8 +14,10 @@ async function start () {
 
   skog.info(`Fetching errors from ${yesterday}`)
   const errors = fetchImportErrors(yesterday)
+
   for await (const error of errors) {
     console.log(error)
+    return
   }
 }
 
