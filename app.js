@@ -4,7 +4,7 @@ const server = require('./server')
 const cron = require('./cron')
 
 skog.createLogger({
-  name: 'lms-sis-monitor',
+  app: 'lms-sis-monitor',
   level: 'info'
 })
 
