@@ -5,6 +5,7 @@ const cron = require('./cron')
 
 skog.createLogger({
   app: 'lms-sis-monitor',
+  name: 'lms-sis-monitor',
   level: 'info'
 })
 
