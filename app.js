@@ -1,4 +1,5 @@
 require('dotenv').config()
+require('@kth/reqvars').check()
 const skog = require('skog/bunyan')
 const server = require('./server')
 const cron = require('./cron')
