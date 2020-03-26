@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format": "prettier-standard \"**/*.{js,md,yml,json}\"",
+    "test": "prettier-standard --lint --check \"**/*.{js,md,yml,json}\""
   },
   "keywords": [],
   "author": "KTH Royal Institute of Technology",
@@ -21,6 +22,6 @@
     "skog": "^0.1.0"
   },
   "devDependencies": {
-    "standard": "^14.2.0"
+    "prettier-standard": "^16.1.0"
   }
 }
