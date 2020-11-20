@@ -1,5 +1,5 @@
 const { scheduleJob } = require('node-schedule')
-const skog = require('skog')
+const log = require('skog')
 const dateFns = require('date-fns')
 const { logSisImportErrors } = require('../lib/index')
 
@@ -21,10 +21,8 @@ async function sync () {
 
   running = true
 
-  await skog.child({ req_id: cuid() }, async () => {
-    const oneDayBack = dateFns.subDays(new Date(), 1)
-    await logSisImportErrors()
-  })
+  const oneDayBack = dateFns.subDays(new Date(), 1)
+  await logSisImportErrors(oneDayBack)
 
   running = false
 }
