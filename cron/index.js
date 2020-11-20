@@ -3,13 +3,11 @@ const skog = require('skog')
 const dateFns = require('date-fns')
 const { logSisImportErrors } = require('../lib/index')
 
-
 function sleep (t) {
   return new Promise(resolve => {
     setTimeout(resolve, t)
   })
 }
-
 
 // Every 4 hours
 const INTERVAL = 4 * 3600 * 1000
@@ -38,7 +36,6 @@ async function start () {
     await sleep(INTERVAL)
   }
 }
-
 
 module.exports = {
   start
