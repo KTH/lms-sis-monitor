@@ -1,6 +1,4 @@
-const { scheduleJob } = require('node-schedule')
 const log = require('skog')
-const dateFns = require('date-fns')
 const { logSisImportErrors } = require('../lib/index')
 
 function sleep (t) {
@@ -21,7 +19,8 @@ async function sync () {
 
   running = true
 
-  const oneDayBack = dateFns.subDays(new Date(), 1)
+  const now = new Date()
+  const oneDayBack = now.setDate(now.getDate() - 1)
   await logSisImportErrors(oneDayBack)
 
   running = false
