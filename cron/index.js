@@ -20,7 +20,8 @@ async function sync () {
   running = true
 
   const now = new Date()
-  const oneDayBack = now.setDate(now.getDate() - 1)
+  const oneDayBack = new Date()
+  oneDayBack.setDate(now.getDate() - 1)
   await logSisImportErrors(oneDayBack)
 
   running = false
