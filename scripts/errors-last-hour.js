@@ -7,7 +7,7 @@ async function start () {
   const now = new Date()
   const date = new Date()
   date.setHours(now.getHours() - 1)
-  await logSisImportErrors(date)
+  await logSisImportErrors(date, ['lms-activity-rooms'])
 }
 
 start()

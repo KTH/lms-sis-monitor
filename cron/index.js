@@ -22,7 +22,10 @@ async function sync () {
   const now = new Date()
   const oneDayBack = new Date()
   oneDayBack.setDate(now.getDate() - 1)
-  await logSisImportErrors(oneDayBack)
+
+  const apps = ['lms-activity-rooms']
+
+  await logSisImportErrors(oneDayBack, apps)
 
   running = false
 }
