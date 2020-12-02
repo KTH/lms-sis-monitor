@@ -10,10 +10,7 @@ const log = require('skog')
  * Log SIS Import Errors that happened between `startDate` and now. Log only
  * errors on given apps
  */
-module.exports = async function logErrors (
-  startDate,
-  apps
-) {
+module.exports = async function logErrors (startDate, apps) {
   const errors = fetchImportErrors(startDate, apps)
 
   for await (const err of errors) {
