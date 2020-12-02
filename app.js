@@ -6,8 +6,8 @@ require('skog/bunyan').createLogger({
   level: 'info'
 })
 
-const server = require('./server')
-const cron = require('./cron')
+const server = require('./src/server')
+const runPeriodically = require('./run-periodically')
 
-cron.start()
+runPeriodically()
 server.listen(3000)

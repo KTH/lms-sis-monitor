@@ -1,5 +1,5 @@
 const log = require('skog')
-const { logSisImportErrors } = require('../lib/index')
+const logErrors = require('./log-errors')
 
 function sleep (t) {
   return new Promise(resolve => {
@@ -25,19 +25,15 @@ async function sync () {
 
   const apps = ['lms-activity-rooms']
 
-  await logSisImportErrors(oneDayBack, apps)
+  await logErrors(oneDayBack, apps)
 
   running = false
 }
 
-async function start () {
+module.exports = async function start () {
   while (true) {
     await sync()
     log.info(`Next invocation: ${new Date(Date.now() + INTERVAL)}`)
     await sleep(INTERVAL)
   }
-}
-
-module.exports = {
-  start
 }
