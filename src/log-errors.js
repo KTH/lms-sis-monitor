@@ -50,7 +50,7 @@ async function * fetchFailedImports (startDate, prefixes = []) {
           yield imp
         }
 
-        const filenames = attachment.map(attachment => attachment.filename)
+        const filenames = attachments.map(attachment => attachment.filename)
         if (anyStartsWith(filenames, prefixes)) {
           yield imp
         }

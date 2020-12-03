@@ -7,7 +7,7 @@ require('skog/bunyan').createLogger({
 })
 
 const server = require('./src/server')
-const runPeriodically = require('./run-periodically')
+const runPeriodically = require('./src/run-periodically')
 
 runPeriodically()
 server.listen(3000)
