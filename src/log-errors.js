@@ -9,6 +9,8 @@ const log = require('skog')
 /**
  * Log SIS Import Errors that happened between `startDate` and now. Log only
  * errors on given apps
+ *
+ * Note: if no "apps" is given, it will return nothing.
  */
 module.exports = async function logErrors (startDate, apps) {
   const errors = fetchImportErrors(startDate, apps)
@@ -45,11 +47,8 @@ async function * fetchFailedImports (startDate, prefixes = []) {
     for (const imp of page.sis_imports) {
       const attachments = imp.csv_attachments
 
+      // workflow_stage != "imported" means "with errors"
       if (imp.workflow_state !== 'imported') {
-        if (prefixes.length === 0) {
-          yield imp
-        }
-
         const filenames = attachments.map(attachment => attachment.filename)
         if (anyStartsWith(filenames, prefixes)) {
           yield imp
