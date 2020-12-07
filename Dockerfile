@@ -8,9 +8,7 @@ COPY [".env.in", ".env.in"]
 COPY ["app.js", "app.js"]
 
 # Source directories
-COPY ["cron", "cron"]
-COPY ["lib", "lib"]
-COPY ["server", "server"]
+COPY ["src", "src"]
 
 RUN npm ci --production
 EXPOSE 3000
