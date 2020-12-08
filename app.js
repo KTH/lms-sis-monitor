@@ -9,5 +9,7 @@ require('skog/bunyan').createLogger({
 const server = require('./src/server')
 const runPeriodically = require('./src/run-periodically')
 
+console.log('TODO: remove this log line, but catch unCaughtExceptions')
+
 runPeriodically()
 server.listen(3000)
