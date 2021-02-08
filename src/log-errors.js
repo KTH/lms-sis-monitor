@@ -1,10 +1,7 @@
 const CanvasAPI = require('@kth/canvas-api')
 const canvas = new CanvasAPI(
   process.env.CANVAS_API_URL,
-  process.env.CANVAS_API_TOKEN,
-  {
-    timeout: 10 * 1000
-  }
+  process.env.CANVAS_API_TOKEN
 )
 
 const log = require('skog')
@@ -28,6 +25,7 @@ module.exports = async function logErrors (startDate, apps) {
 
 async function * fetchImportErrors (startDate, prefixes) {
   for await (const failedImport of fetchFailedImports(startDate, prefixes)) {
+    log.info(`Fetching errors for SIS Import ID: ${failedImport.id}`)
     const errors = canvas.listPaginated(
       `accounts/1/sis_imports/${failedImport.id}/errors`
     )
@@ -42,9 +40,15 @@ async function * fetchImportErrors (startDate, prefixes) {
 
 async function * fetchFailedImports (startDate, prefixes = []) {
   log.info(`Fetching from ${startDate.toISOString()}`)
-  const imports = canvas.listPaginated('accounts/1/sis_imports', {
-    created_since: startDate.toISOString()
-  })
+  const imports = canvas.listPaginated(
+    'accounts/1/sis_imports',
+    {
+      created_since: startDate.toISOString()
+    },
+    {
+      timeout: 1
+    }
+  )
 
   for await (const page of imports) {
     for (const imp of page.sis_imports) {
