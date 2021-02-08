@@ -59,7 +59,7 @@ async function * fetchFailedImports (startDate, prefixes = []) {
       const attachments = imp.csv_attachments
 
       // workflow_stage != "imported" means "with errors"
-      if (imp.workflow_state !== 'imported') {
+      if (imp.workflow_state !== 'imported' && attachments) {
         const filenames = attachments.map(attachment => attachment.filename)
         if (anyStartsWith(filenames, prefixes)) {
           yield imp
