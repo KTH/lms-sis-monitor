@@ -27,7 +27,11 @@ async function * fetchImportErrors (startDate, prefixes) {
   for await (const failedImport of fetchFailedImports(startDate, prefixes)) {
     log.info(`Fetching errors for SIS Import ID: ${failedImport.id}`)
     const errors = canvas.listPaginated(
-      `accounts/1/sis_imports/${failedImport.id}/errors`
+      `accounts/1/sis_imports/${failedImport.id}/errors`,
+      {},
+      {
+        timeout: 10 * 1000
+      }
     )
 
     for await (const page of errors) {
@@ -46,7 +50,7 @@ async function * fetchFailedImports (startDate, prefixes = []) {
       created_since: startDate.toISOString()
     },
     {
-      timeout: 1
+      timeout: 10 * 1000
     }
   )
 
