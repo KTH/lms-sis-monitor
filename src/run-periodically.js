@@ -1,39 +1,39 @@
-const log = require('skog')
-const logErrors = require('./log-errors')
+const log = require("skog");
+const logErrors = require("./log-errors");
 
-function sleep (t) {
-  return new Promise(resolve => {
-    setTimeout(resolve, t)
-  })
+function sleep(t) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, t);
+  });
 }
 
 // Every 4 hours
-const INTERVAL = 4 * 3600 * 1000
-let job
-let running = false
+const INTERVAL = 4 * 3600 * 1000;
+let job;
+let running = false;
 
-async function sync () {
+async function sync() {
   if (running) {
-    return
+    return;
   }
 
-  running = true
+  running = true;
 
-  const now = new Date()
-  const oneDayBack = new Date()
-  oneDayBack.setDate(now.getDate() - 1)
+  const now = new Date();
+  const oneDayBack = new Date();
+  oneDayBack.setDate(now.getDate() - 1);
 
-  const apps = ['lms-activity-rooms', 'lms-antagna']
+  const apps = ["lms-activity-rooms", "lms-antagna"];
 
-  await logErrors(oneDayBack, apps)
+  await logErrors(oneDayBack, apps);
 
-  running = false
+  running = false;
 }
 
-module.exports = async function start () {
+module.exports = async function start() {
   while (true) {
-    await sync()
-    log.info(`Next invocation: ${new Date(Date.now() + INTERVAL)}`)
-    await sleep(INTERVAL)
+    await sync();
+    log.info(`Next invocation: ${new Date(Date.now() + INTERVAL)}`);
+    await sleep(INTERVAL);
   }
-}
+};
