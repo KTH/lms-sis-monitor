@@ -12,6 +12,9 @@ const INTERVAL = 4 * 3600 * 1000;
 let job;
 let running = false;
 
+// Save when was the last time the app look at errors
+let latestRun;
+
 async function sync() {
   if (running) {
     return;
@@ -25,7 +28,13 @@ async function sync() {
 
   const apps = ["lms-activity-rooms", "lms-antagna"];
 
-  await logErrors(oneDayBack, apps);
+  if (latestRun && latestRun > oneDayBack) {
+    await logErrors(latestRun, apps);
+    latestRun = now;
+  } else {
+    await logErrors(oneDayBack, apps);
+    latestRun = now;
+  }
 
   running = false;
 }
