@@ -6,16 +6,16 @@ require("skog/bunyan").createLogger({
   level: "info",
 });
 
+const log = require("skog");
 const server = require("./src/server");
 const runPeriodically = require("./src/run-periodically");
-const log = require("skog");
 
 process.on("uncaughtException", (err) => {
   log.fatal(err, "Uncaught Exception thrown");
   process.exit(1);
 });
 
-process.on("unhandledRejection", (reason, p) => {
+process.on("unhandledRejection", (reason) => {
   throw reason;
 });
 

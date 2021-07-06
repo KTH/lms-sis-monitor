@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop, no-constant-condition */
 const log = require("skog");
 const logErrors = require("./log-errors");
 
@@ -9,7 +10,6 @@ function sleep(t) {
 
 // Every 4 hours
 const INTERVAL = 4 * 3600 * 1000;
-let job;
 let running = false;
 
 async function sync() {

@@ -1,4 +1,5 @@
 const express = require("express");
+
 const app = express();
 
 // Only one endpoint. No routers, no middlewares.

@@ -7,7 +7,9 @@
     "start": "node .",
     "dev": "node . | bunyan -o short",
     "format": "prettier --write .",
-    "test": "prettier --check ."
+    "test:lint": "eslint *.js src",
+    "test:format": "prettier --check .",
+    "test": "npm run test:lint && npm run test:format"
   },
   "keywords": [],
   "author": "KTH Royal Institute of Technology",
@@ -21,7 +23,9 @@
     "skog": "^1.0.1-alpha.0"
   },
   "devDependencies": {
+    "@kth/eslint-config-kth": "^1.0.10",
     "ava": "^3.13.0",
+    "eslint": "^7.30.0",
     "prettier": "^2.3.1"
   }
 }
