@@ -30,11 +30,10 @@ async function sync() {
 
   if (latestRun && latestRun > oneDayBack) {
     await logErrors(latestRun, apps);
-    latestRun = now;
   } else {
     await logErrors(oneDayBack, apps);
-    latestRun = now;
   }
+  latestRun = now;
 
   running = false;
 }
