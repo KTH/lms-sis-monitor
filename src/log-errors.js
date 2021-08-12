@@ -1,11 +1,16 @@
 const CanvasAPI = require("@kth/canvas-api");
+const log = require("skog");
 
 const canvas = new CanvasAPI(
   process.env.CANVAS_API_URL,
-  process.env.CANVAS_API_TOKEN
+  process.env.CANVAS_API_TOKEN,
+  {
+    timeout: 10 * 1000,
+    retry: {
+      limit: 5,
+    },
+  }
 );
-
-const log = require("skog");
 
 function anyStartsWith(names = [], prefixes = []) {
   for (const name of names) {
@@ -21,15 +26,9 @@ function anyStartsWith(names = [], prefixes = []) {
 
 async function* fetchFailedImports(startDate, prefixes = []) {
   log.info(`Fetching from ${startDate.toISOString()}`);
-  const imports = canvas.listPaginated(
-    "accounts/1/sis_imports",
-    {
-      created_since: startDate.toISOString(),
-    },
-    {
-      timeout: 10 * 1000,
-    }
-  );
+  const imports = canvas.listPaginated("accounts/1/sis_imports", {
+    created_since: startDate.toISOString(),
+  });
 
   for await (const page of imports) {
     for (const imp of page.sis_imports) {
@@ -50,11 +49,7 @@ async function* fetchImportErrors(startDate, prefixes) {
   for await (const failedImport of fetchFailedImports(startDate, prefixes)) {
     log.info(`Fetching errors for SIS Import ID: ${failedImport.id}`);
     const errors = canvas.listPaginated(
-      `accounts/1/sis_imports/${failedImport.id}/errors`,
-      {},
-      {
-        timeout: 10 * 1000,
-      }
+      `accounts/1/sis_imports/${failedImport.id}/errors`
     );
 
     for await (const page of errors) {
