@@ -22,18 +22,22 @@ async function sync() {
 
   running = true;
 
-  const now = new Date();
-  const oneDayBack = new Date();
-  oneDayBack.setDate(now.getDate() - 1);
+  try {
+    const now = new Date();
+    const oneDayBack = new Date();
+    oneDayBack.setDate(now.getDate() - 1);
 
-  const apps = ["lms-activity-rooms", "lms-antagna"];
+    const apps = ["lms-activity-rooms", "lms-antagna"];
 
-  if (latestRun && latestRun > oneDayBack) {
-    await logErrors(latestRun, apps);
-  } else {
-    await logErrors(oneDayBack, apps);
+    if (latestRun && latestRun > oneDayBack) {
+      await logErrors(latestRun, apps);
+    } else {
+      await logErrors(oneDayBack, apps);
+    }
+    latestRun = now;
+  } catch (err) {
+    log.error({ err }, "Error when trying to check import errors");
   }
-  latestRun = now;
 
   running = false;
 }
