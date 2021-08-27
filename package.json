@@ -15,7 +15,7 @@
   "author": "KTH Royal Institute of Technology",
   "license": "MIT",
   "dependencies": {
-    "@kth/canvas-api": "^3.0.0",
+    "@kth/canvas-api": "^3.2.0",
     "@kth/reqvars": "^2.0.1",
     "bunyan": "^1.8.14",
     "dotenv": "^8.2.0",
