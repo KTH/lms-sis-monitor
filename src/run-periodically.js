@@ -30,8 +30,10 @@ async function sync() {
 
     const apps = [
       "lms-activity-rooms",
-      "lms-course-rooms-batch",
-      "lms-sync-users",
+      "courses",      // lms-course-rooms-batch
+      "sections",     // lms-course-rooms-batch
+      "enrollments",  // lms-course-rooms-batch
+      "app.katalog3", // lms-sync-users
     ];
 
     if (latestRun && latestRun > oneDayBack) {
