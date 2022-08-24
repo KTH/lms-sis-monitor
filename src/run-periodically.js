@@ -28,7 +28,11 @@ async function sync() {
     const oneDayBack = new Date();
     oneDayBack.setDate(now.getDate() - 1);
 
-    const apps = ["lms-activity-rooms", "lms-course-rooms-batch", "lms-sync-users"];
+    const apps = [
+      "lms-activity-rooms",
+      "lms-course-rooms-batch",
+      "lms-sync-users"
+    ];
 
     if (latestRun && latestRun > oneDayBack) {
       await logErrors(latestRun, apps);
@@ -50,15 +54,13 @@ module.exports = async function start() {
   while (true) {
     const completedRun = await sync();
 
-    if (!completedRun) {
-      // If the process was blocked we wait a while
-      // and try again. This could happen if Canvas
-      // is unresponsive.
+    if (completedRun) {
+      log.info(`Next invocation: ${new Date(Date.now() + INTERVAL)}`);
+      await sleep(INTERVAL);
+    } else {
+      // If the process was blocked we wait a shot while and
+      // try again. This could happen if Canvas is unresponsive.
       await sleep(5 * ONE_MINUTE);
-      continue;
     };
-
-    log.info(`Next invocation: ${new Date(Date.now() + INTERVAL)}`);
-    await sleep(INTERVAL);
   }
 };
