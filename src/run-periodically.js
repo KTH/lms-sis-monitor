@@ -31,7 +31,7 @@ async function sync() {
     const apps = [
       "lms-activity-rooms",
       "lms-course-rooms-batch",
-      "lms-sync-users"
+      "lms-sync-users",
     ];
 
     if (latestRun && latestRun > oneDayBack) {
@@ -61,6 +61,6 @@ module.exports = async function start() {
       // If the process was blocked we wait a shot while and
       // try again. This could happen if Canvas is unresponsive.
       await sleep(5 * ONE_MINUTE);
-    };
+    }
   }
 };
