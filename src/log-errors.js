@@ -31,8 +31,8 @@ async function* fetchFailedImports(startDate, prefixes = []) {
   });
 
   for await (const page of imports) {
-    const { sis_imports } = page.body;
-    for (const sisImport of sis_imports) {
+    const { sis_imports: sisImports } = page.body;
+    for (const sisImport of sisImports) {
       const attachments = sisImport.csv_attachments;
 
       // workflow_stage != "imported" means "with errors"
