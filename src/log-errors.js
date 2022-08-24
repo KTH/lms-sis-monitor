@@ -1,4 +1,4 @@
-const CanvasAPI = require("@kth/canvas-api");
+const CanvasAPI = require("@kth/canvas-api").default;
 const log = require("skog");
 
 const canvas = new CanvasAPI(
@@ -26,19 +26,20 @@ function anyStartsWith(names = [], prefixes = []) {
 
 async function* fetchFailedImports(startDate, prefixes = []) {
   log.info(`Fetching from ${startDate.toISOString()}`);
-  const imports = canvas.listPaginated("accounts/1/sis_imports", {
+  const imports = canvas.listPages("accounts/1/sis_imports", {
     created_since: startDate.toISOString(),
   });
 
   for await (const page of imports) {
-    for (const imp of page.sis_imports) {
-      const attachments = imp.csv_attachments;
+    const { sis_imports } = page.body;
+    for (const sisImport of sis_imports) {
+      const attachments = sisImport.csv_attachments;
 
       // workflow_stage != "imported" means "with errors"
-      if (imp.workflow_state !== "imported" && attachments) {
+      if (sisImport.workflow_state !== "imported" && attachments) {
         const filenames = attachments.map((attachment) => attachment.filename);
         if (anyStartsWith(filenames, prefixes)) {
-          yield imp;
+          yield sisImport;
         }
       }
     }
