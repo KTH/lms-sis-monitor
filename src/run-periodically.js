@@ -28,7 +28,7 @@ async function sync() {
     const oneDayBack = new Date();
     oneDayBack.setDate(now.getDate() - 1);
 
-    const apps = ["lms-activity-rooms", "lms-antagna"];
+    const apps = ["lms-activity-rooms"];
 
     if (latestRun && latestRun > oneDayBack) {
       await logErrors(latestRun, apps);
