@@ -68,9 +68,7 @@ async function* fetchImportErrors(startDate, prefixes) {
  * Note: if no "apps" is given, it will return nothing.
  */
 module.exports = async function logErrors(startDate, apps) {
-  const errors = fetchImportErrors(startDate, apps);
-
-  for await (const err of errors) {
+  for await (const err of fetchImportErrors(startDate, apps)) {
     log.error(
       { err },
       `SIS Import ID ${err.sis_import_id}, Error: ${err.message}`
