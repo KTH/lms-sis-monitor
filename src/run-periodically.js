@@ -9,7 +9,8 @@ function sleep(t) {
 }
 
 // Every 4 hours
-const INTERVAL = 4 * 3600 * 1000;
+const ONE_MINUTE = 60 * 1000;
+const INTERVAL = 4 * 60 * ONE_MINUTE;
 let running = false;
 
 // Save when was the last time the app look at errors
@@ -17,7 +18,7 @@ let latestRun;
 
 async function sync() {
   if (running) {
-    return;
+    return false;
   }
 
   running = true;
@@ -40,11 +41,20 @@ async function sync() {
   }
 
   running = false;
+  return true;
 }
 
 module.exports = async function start() {
   while (true) {
-    await sync();
+    const didRun = await sync();
+
+    if (!didRun) {
+      // If the process was blocked we wait a minute
+      // and try again.
+      await sleep(ONE_MINUTE);
+      continue;
+    };
+
     log.info(`Next invocation: ${new Date(Date.now() + INTERVAL)}`);
     await sleep(INTERVAL);
   }
