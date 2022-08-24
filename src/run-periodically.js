@@ -38,6 +38,8 @@ async function sync() {
     latestRun = now;
   } catch (err) {
     log.error({ err }, "Error when trying to check import errors");
+    running = false;
+    return false;
   }
 
   running = false;
@@ -46,12 +48,13 @@ async function sync() {
 
 module.exports = async function start() {
   while (true) {
-    const didRun = await sync();
+    const completedRun = await sync();
 
-    if (!didRun) {
-      // If the process was blocked we wait a minute
-      // and try again.
-      await sleep(ONE_MINUTE);
+    if (!completedRun) {
+      // If the process was blocked we wait a while
+      // and try again. This could happen if Canvas
+      // is unresponsive.
+      await sleep(5 * ONE_MINUTE);
       continue;
     };
 
