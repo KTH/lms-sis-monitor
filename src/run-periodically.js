@@ -11,18 +11,10 @@ function sleep(t) {
 // Every 4 hours
 const ONE_MINUTE = 60 * 1000;
 const INTERVAL = 4 * 60 * ONE_MINUTE;
-let running = false;
-
 // Save when was the last time the app look at errors
 let latestRun;
 
 async function sync() {
-  if (running) {
-    return false;
-  }
-
-  running = true;
-
   try {
     const now = new Date();
     const oneDayBack = new Date();
@@ -31,7 +23,8 @@ async function sync() {
     const apps = [
       "lms-activity-rooms",
       "lms-course-rooms-batch",
-      "lms-sync-users",
+      // Disable monitor of lms-sync-users until it has been tested, and we know that there won't be a lot of false alarms
+      // "lms-sync-users",
     ];
 
     if (latestRun && latestRun > oneDayBack) {
@@ -42,11 +35,9 @@ async function sync() {
     latestRun = now;
   } catch (err) {
     log.error({ err }, "Error when trying to check import errors");
-    running = false;
     return false;
   }
 
-  running = false;
   return true;
 }
 
@@ -58,7 +49,7 @@ module.exports = async function start() {
       log.info(`Next invocation: ${new Date(Date.now() + INTERVAL)}`);
       await sleep(INTERVAL);
     } else {
-      // If the process was blocked we wait a shot while and
+      // If the process was blocked we wait a short while and
       // try again. This could happen if Canvas is unresponsive.
       await sleep(5 * ONE_MINUTE);
     }
