@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@kth/eslint-config-kth": "^1.0.10",
-    "ava": "^3.13.0",
+    "ava": "^5.1.1",
     "eslint": "^7.30.0",
     "prettier": "^2.3.1"
   }
