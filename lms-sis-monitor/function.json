@@ -1,0 +1,10 @@
+{
+  "bindings": [
+    {
+      "name": "every4hours",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0 0 */4 * * *"
+    }
+  ]
+}

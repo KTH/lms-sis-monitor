@@ -1,6 +1,6 @@
 require("dotenv").config();
 const log = require("skog");
-const logErrors = require("../src/log-errors");
+const logErrors = require("../lms-sis-monitor/log-errors");
 
 async function start() {
   log.info(
