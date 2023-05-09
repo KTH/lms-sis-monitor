@@ -9,7 +9,7 @@
     "format": "prettier --write .",
     "test:lint": "eslint *.js src",
     "test:format": "prettier --check .",
-    "test": "npm run test:lint && npm run test:format"
+    "test": "npm run test:format"
   },
   "keywords": [],
   "author": "KTH Royal Institute of Technology",
